@@ -1,0 +1,17 @@
+# Environment / secrets
+.env
+
+# XAMPP / local files
+*.log
+
+# Uploaded files
+uploads/
+
+# IDE
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+includes/config.php
