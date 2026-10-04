@@ -1,6 +1,9 @@
 # Environment / secrets
 .env
 
+# Database configuration
+includes/config.php
+
 # XAMPP / local files
 *.log
 
@@ -14,4 +17,3 @@ uploads/
 # OS files
 .DS_Store
 Thumbs.db
-includes/config.php
