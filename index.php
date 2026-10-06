@@ -203,148 +203,119 @@
     </section>
 
 
- <!-- ==============================
-     FEATURED PROJECTS
-=============================== -->
-
-<section class="projects-preview">
-
-    <div class="section-title">
-
-        <p>WHAT I'VE BUILT</p>
-
-        <h2>Featured Projects</h2>
-
-    </div>
-
-
-    <div class="projects-grid">
-
-        <!-- PROJECT 1 -->
-
-        <article class="project-card">
-
-            <div class="project-content">
-
-                <span class="project-number">01</span>
-
-                <h3>Car Marketplace</h3>
-
-                <p>
-                    A web platform designed to help users
-                    discover and explore cars online.
-                </p>
-
-                <div class="project-tech">
-                    <span>HTML</span>
-                    <span>CSS</span>
-                    <span>JavaScript</span>
-                    <span>PHP</span>
-                </div>
-
-            </div>
-
-        </article>
-
-
-        <!-- PROJECT 2 -->
-
-        <article class="project-card">
-
-            <div class="project-content">
-
-                <span class="project-number">02</span>
-
-                <h3>Hospital Management System</h3>
-
-                <p>
-                    A system designed to organize patient
-                    and hospital information.
-                </p>
-
-                <div class="project-tech">
-                    <span>PHP</span>
-                    <span>MySQL</span>
-                    <span>HTML</span>
-                    <span>CSS</span>
-                </div>
-
-            </div>
-
-        </article>
-
-
-        <!-- PROJECT 3 -->
-
-        <article class="project-card">
-
-            <div class="project-content">
-
-                <span class="project-number">03</span>
-
-                <h3>Supermarket System</h3>
-
-                <p>
-                    A system for managing products,
-                    categories, and prices.
-                </p>
-
-                <div class="project-tech">
-                    <span>PHP</span>
-                    <span>MySQL</span>
-                    <span>JavaScript</span>
-                </div>
-
-            </div>
-
-        </article>
-
-    </div>
-
-
-    <div class="center-button">
-
-        <a href="projects.php" class="btn primary-btn">
-            View All Projects
-        </a>
-
-    </div>
-
-</section>
-
-
     <!-- ==============================
-         SOCIAL LINKS
+         FEATURED PROJECTS
     =============================== -->
 
-    <section class="social-section">
+    <section class="projects-preview">
 
         <div class="section-title">
 
-            <p>LET'S CONNECT</p>
+            <p>WHAT I'VE BUILT</p>
 
-            <h2>Find Me Online</h2>
+            <h2>Featured Projects</h2>
+
+        </div>
+
+
+        <div class="projects-grid">
+
+            <!-- PROJECT 1 -->
+
+            <article class="project-card">
+
+                <div class="project-content">
+
+                    <span class="project-number">01</span>
+
+                    <h3>Car Marketplace</h3>
+
+                    <p>
+                        A web platform designed to help users
+                        discover and explore cars online.
+                    </p>
+
+                    <div class="project-tech">
+                        <span>HTML</span>
+                        <span>CSS</span>
+                        <span>JavaScript</span>
+                        <span>PHP</span>
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- PROJECT 2 -->
+
+            <article class="project-card">
+
+                <div class="project-content">
+
+                    <span class="project-number">02</span>
+
+                    <h3>Hospital Management System</h3>
+
+                    <p>
+                        A system designed to organize patient
+                        and hospital information.
+                    </p>
+
+                    <div class="project-tech">
+                        <span>PHP</span>
+                        <span>MySQL</span>
+                        <span>HTML</span>
+                        <span>CSS</span>
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- PROJECT 3 -->
+
+            <article class="project-card">
+
+                <div class="project-content">
+
+                    <span class="project-number">03</span>
+
+                    <h3>Supermarket System</h3>
+
+                    <p>
+                        A system for managing products,
+                        categories, and prices.
+                    </p>
+
+                    <div class="project-tech">
+                        <span>PHP</span>
+                        <span>MySQL</span>
+                        <span>JavaScript</span>
+                    </div>
+
+                </div>
+
+            </article>
 
         </div>
 
 
-        <div class="social-links">
+        <div class="center-button">
 
-            <a href="#" target="_blank">
-                Instagram
-            </a>
-
-            <a href="#" target="_blank">
-                Whatsapp
-            </a>
-
-            <a href="#" target="_blank">
-                TikTok
+            <a href="projects.php" class="btn primary-btn">
+                View All Projects
             </a>
 
         </div>
 
-    </section>
+    </section> <!-- Added missing closing tag for projects-preview -->
+
+
+    <!-- ==============================
+         CALL TO ACTION
+    =============================== -->
 
     <section class="cta">
 

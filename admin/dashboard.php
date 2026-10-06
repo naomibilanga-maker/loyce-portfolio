@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 
 if (!isset($_SESSION["admin_id"])) {
@@ -12,19 +11,14 @@ require_once "../includes/config.php";
 // =============================
 // GET PROJECTS
 // =============================
-
 $sql = "SELECT * FROM projects ORDER BY created_at DESC";
-
 $result = $conn->query($sql);
-
 $totalProjects = $result ? $result->num_rows : 0;
 
 // =============================
 // GET MESSAGES
 // =============================
-
 $sql_messages = "SELECT COUNT(*) AS total FROM messages";
-
 $result_messages = $conn->query($sql_messages);
 
 if ($result_messages) {
@@ -33,22 +27,24 @@ if ($result_messages) {
 } else {
     $message_count = 0;
 }
-
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard | Loyce</title>
 
+    <!-- Optional: Inter font for a more premium feel -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
     <style>
         /* =============================
-            RESET
+           RESET
         ============================= */
-
         * {
             margin: 0;
             padding: 0;
@@ -56,144 +52,178 @@ if ($result_messages) {
         }
 
         /* =============================
-            BODY
+           BODY
         ============================= */
-
         body {
-            font-family: Arial, sans-serif;
-            background: #0a0a0a;
-            color: #ffffff;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: #0b0b0f;
+            color: #e5e7eb;
+            line-height: 1.5;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
         }
 
         /* =============================
-            DASHBOARD
+           DASHBOARD LAYOUT
         ============================= */
-
         .dashboard {
             display: flex;
             min-height: 100vh;
         }
 
         /* =============================
-            SIDEBAR
+           SIDEBAR
         ============================= */
-
         .sidebar {
-            width: 240px;
-            background: #111111;
-            border-right: 1px solid #2a2a2a;
-            padding: 30px 20px;
+            width: 260px;
+            background: #0f1115;
+            border-right: 1px solid #1f2228;
+            padding: 28px 18px;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
         }
 
         .logo {
             color: #d4af37;
-            font-size: 20px;
-            font-weight: bold;
-            letter-spacing: 3px;
-            margin-bottom: 50px;
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: 2.5px;
+            margin-bottom: 40px;
+            padding-left: 10px;
         }
 
         .sidebar ul {
-            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
         }
 
         .sidebar li {
-            margin-bottom: 10px;
+            margin: 0;
         }
 
         .sidebar a {
-            display: block;
-            padding: 13px 15px;
-            color: #999;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 14px;
+            color: #9ca3af;
+            border-radius: 8px;
+            transition: all 0.25s ease;
+            font-weight: 600;
+            font-size: 14px;
         }
 
         .sidebar a:hover,
         .sidebar a.active {
-            background: #1d1d1d;
+            background: #15181f;
             color: #d4af37;
         }
 
-        /* LOGOUT */
+        .sidebar a.active {
+            border-left: 3px solid #d4af37;
+            padding-left: 11px;
+        }
 
         .logout {
-            margin-top: 40px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #1f2228;
         }
 
         /* =============================
-            MAIN CONTENT
+           MAIN CONTENT
         ============================= */
-
         .main-content {
             flex: 1;
-            padding: 40px;
+            padding: 40px 40px 60px;
+            background: linear-gradient(180deg, #0b0b0f 0%, #0a0a0e 100%);
         }
 
         /* =============================
-            TOPBAR
+           TOPBAR
         ============================= */
-
         .topbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 40px;
+            margin-bottom: 36px;
+            gap: 20px;
         }
 
         .topbar h1 {
-            font-size: 30px;
+            font-size: 28px;
+            font-weight: 800;
+            color: #f3f4f6;
+            letter-spacing: -0.3px;
         }
 
         .topbar p {
-            color: #888;
-            margin-top: 8px;
+            color: #9ca3af;
+            margin-top: 6px;
+            font-size: 14px;
         }
 
         /* =============================
-            BUTTONS
+           BUTTONS
         ============================= */
-
         .btn-group {
             display: flex;
             gap: 12px;
             align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .add-button,
+        .secondary-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 18px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 14px;
+            transition: all 0.25s ease;
+            white-space: nowrap;
         }
 
         .add-button {
             background: #d4af37;
-            color: #000;
-            padding: 13px 20px;
-            text-decoration: none;
-            font-weight: bold;
-            border-radius: 4px;
-            transition: 0.3s ease;
+            color: #0b0b0f;
+            border: 2px solid #d4af37;
         }
 
         .add-button:hover {
-            opacity: 0.85;
+            background: #f5e6a3;
+            border-color: #f5e6a3;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 22px rgba(212, 175, 55, 0.35);
         }
 
         .secondary-button {
             background: transparent;
             color: #d4af37;
-            border: 1px solid #d4af37;
-            padding: 12px 20px;
-            text-decoration: none;
-            font-weight: bold;
-            border-radius: 4px;
-            transition: 0.3s ease;
+            border: 2px solid #d4af37;
         }
 
         .secondary-button:hover {
-            background: rgba(212, 175, 55, 0.1);
+            background: rgba(212, 175, 55, 0.12);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 22px rgba(212, 175, 55, 0.25);
         }
 
         /* =============================
-            STATISTICS
+           STATISTICS
         ============================= */
-
         .stats {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -202,101 +232,129 @@ if ($result_messages) {
         }
 
         .stat-card {
-            background: #111;
-            border: 1px solid #292929;
-            padding: 25px;
+            background: #0f1115;
+            border: 1px solid #1f2228;
+            padding: 24px;
+            border-radius: 12px;
+            transition: all 0.25s ease;
+        }
+
+        .stat-card:hover {
+            border-color: #2b2f38;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px rgba(2, 6, 23, 0.35);
         }
 
         .stat-card span {
-            color: #888;
-            font-size: 14px;
+            color: #9ca3af;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .stat-card h2 {
             color: #d4af37;
             font-size: 32px;
-            margin-top: 10px;
+            margin-top: 8px;
+            font-weight: 800;
         }
-
-        /* =============================
-            CARD LINKS
-        ============================= */
 
         .card-link {
-            text-decoration: none;
             display: block;
-            transition: 0.3s ease;
         }
 
-        .card-link:hover {
+        .card-link:hover .stat-card {
             border-color: #d4af37;
-            transform: translateY(-3px);
         }
 
         /* =============================
-            PROJECTS BOX
+           PROJECTS BOX
         ============================= */
-
         .projects-box {
-            background: #111;
-            border: 1px solid #292929;
-            padding: 25px;
+            background: #0f1115;
+            border: 1px solid #1f2228;
+            padding: 26px;
+            border-radius: 12px;
         }
 
         .projects-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 25px;
+            margin-bottom: 22px;
+            gap: 16px;
+            flex-wrap: wrap;
         }
 
         .projects-header h2 {
-            font-size: 22px;
+            font-size: 20px;
+            font-weight: 800;
+            color: #f3f4f6;
+            letter-spacing: -0.2px;
         }
 
         /* =============================
-            TABLE
+           TABLE
         ============================= */
-
         .table-container {
             overflow-x: auto;
+            border-radius: 10px;
+            border: 1px solid #1f2228;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
+            min-width: 700px;
         }
 
         th,
         td {
-            padding: 16px 12px;
+            padding: 14px 14px;
             text-align: left;
-            border-bottom: 1px solid #292929;
+            border-bottom: 1px solid #1f2228;
         }
 
         th {
-            color: #888;
-            font-size: 13px;
+            color: #9ca3af;
+            font-size: 12px;
             text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.6px;
+            background: #0b0d12;
         }
 
         td {
-            color: #ddd;
+            color: #e5e7eb;
+            font-size: 14px;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background: #0b0d12;
         }
 
         .project-number {
             color: #d4af37;
+            font-weight: 700;
+            font-family: ui-monospace, SFMonoRegular, "Fira Code", monospace;
+            font-size: 13px;
         }
 
         .type {
-            color: #aaa;
+            color: #d1d5db;
         }
 
         .actions a {
             text-decoration: none;
-            margin-right: 12px;
+            margin-right: 14px;
             font-size: 13px;
-            font-weight: bold;
+            font-weight: 700;
+            transition: color 0.2s ease;
         }
 
         .edit-btn {
@@ -304,34 +362,34 @@ if ($result_messages) {
         }
 
         .edit-btn:hover {
-            text-decoration: underline;
+            color: #f5e6a3;
         }
 
         .delete-btn {
-            color: #ff5c5c;
+            color: #f87171;
         }
 
         .delete-btn:hover {
-            text-decoration: underline;
+            color: #fca5a5;
         }
 
         .empty {
             text-align: center;
-            color: #777;
-            padding: 30px;
+            color: #6b7280;
+            padding: 36px 20px;
+            font-size: 14px;
         }
 
         /* =============================
-            MOBILE
+           MOBILE
         ============================= */
-
-        @media (max-width: 900px) {
+        @media (max-width: 1100px) {
             .stats {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
 
-        @media (max-width: 800px) {
+        @media (max-width: 900px) {
             .dashboard {
                 flex-direction: column;
             }
@@ -339,35 +397,48 @@ if ($result_messages) {
             .sidebar {
                 width: 100%;
                 border-right: none;
-                border-bottom: 1px solid #292929;
+                border-bottom: 1px solid #1f2228;
+                height: auto;
+                position: relative;
+                padding: 18px 16px;
             }
 
             .logo {
-                margin-bottom: 20px;
+                margin-bottom: 14px;
+                padding-left: 0;
             }
 
             .sidebar ul {
-                display: flex;
-                gap: 5px;
+                flex-direction: row;
+                gap: 6px;
                 overflow-x: auto;
             }
 
-            .sidebar li {
-                margin: 0;
+            .sidebar a {
+                padding: 10px 12px;
+                font-size: 13px;
+            }
+
+            .sidebar a.active {
+                border-left: none;
+                border-bottom: 3px solid #d4af37;
+                padding-bottom: 7px;
             }
 
             .logout {
                 margin-top: 10px;
+                padding-top: 10px;
+                border-top: none;
             }
 
             .main-content {
-                padding: 25px 15px;
+                padding: 24px 16px 40px;
             }
 
             .topbar {
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 20px;
+                gap: 16px;
             }
 
             .btn-group {
@@ -383,10 +454,19 @@ if ($result_messages) {
             .stats {
                 grid-template-columns: 1fr;
             }
+
+            .projects-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .projects-header .add-button {
+                width: 100%;
+                text-align: center;
+            }
         }
     </style>
 </head>
-
 <body>
 
 <div class="dashboard">
@@ -421,10 +501,11 @@ if ($result_messages) {
         <!-- TOPBAR -->
         <div class="topbar">
             <div>
-                <h1>Welcome back, Loyce </h1>
+                <h1>Welcome back, <?php echo htmlspecialchars($_SESSION["admin_username"] ?? "Loyce"); ?></h1>
                 <p>Portfolio Management System</p>
             </div>
             <div class="btn-group">
+                <a href="add_project.php" class="add-button">+ Add Project</a>
                 <a href="../index.php" class="secondary-button">View Portfolio</a>
             </div>
         </div>
@@ -434,19 +515,21 @@ if ($result_messages) {
             <!-- TOTAL PROJECTS -->
             <div class="stat-card">
                 <span>Total Projects</span>
-                <h2><?php echo $totalProjects; ?></h2>
+                <h2><?php echo (int)$totalProjects; ?></h2>
             </div>
 
             <!-- MESSAGES -->
-            <a href="messages.php" class="stat-card card-link">
-                <span>Messages</span>
-                <h2><?php echo $message_count; ?></h2>
+            <a href="messages.php" class="card-link">
+                <div class="stat-card">
+                    <span>Messages</span>
+                    <h2><?php echo (int)$message_count; ?></h2>
+                </div>
             </a>
 
             <!-- ADMIN -->
             <div class="stat-card">
                 <span>Admin</span>
-                <h2><?php echo htmlspecialchars($_SESSION["admin_username"]); ?></h2>
+                <h2><?php echo htmlspecialchars($_SESSION["admin_username"] ?? "Admin"); ?></h2>
             </div>
         </div>
 
